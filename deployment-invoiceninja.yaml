@@ -1,0 +1,117 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: invoiceninja
+  name: invoiceninja
+  namespace: invoiceninja
+spec:
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: invoiceninja
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: invoiceninja
+    spec:
+      containers:
+      - name: app
+        envFrom:
+        - configMapRef:
+            name: env
+            optional: false
+        - secretRef:
+            name: env-secret
+            optional: false
+        image: invoiceninja/invoiceninja
+        imagePullPolicy: Always
+        resources: {}
+        volumeMounts:
+        - mountPath: /var/www/app/storage
+          name: invoiceninja
+          subPath: storage
+        - mountPath: /var/www/app/public/logo
+          name: invoiceninja
+          subPath: logo
+        - mountPath: /var/www/app/public
+          name: invoiceninja
+          subPath: public
+        #WEB
+      - name: web
+        envFrom:
+        - configMapRef:
+            name: env
+            optional: false
+        - secretRef:
+            name: env-secret
+            optional: false
+        image: nginx:1
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+          name: http
+          protocol: TCP
+        resources: {}
+        volumeMounts:
+        - mountPath: /var/www/app/storage
+          name: invoiceninja
+          subPath: storage
+        - mountPath: /var/www/app/public/logo
+          name: invoiceninja
+          subPath: logo
+        - mountPath: /var/www/app/public
+          name: invoiceninja
+          subPath: public
+        - mountPath: /etc/nginx/nginx.conf
+          name: nginx
+          subPath: nginx.conf
+        # Cron
+      - name: cron
+        args:
+        - -c
+        - trap "break;exit" SIGHUP SIGINT SIGTERM; sleep 300s; while /bin/true; do
+          ./artisan ninja:send-invoices; ./artisan ninja:send-reminders; sleep 1d;
+          done
+        command:
+        - /bin/sh
+        envFrom:
+        - configMapRef:
+            name: env
+            optional: false
+        - secretRef:
+            name: env-secret
+            optional: false
+        image: invoiceninja/invoiceninja
+        imagePullPolicy: Always
+        resources: {}
+        volumeMounts:
+        - mountPath: /var/www/app/storage
+          name: invoiceninja
+          subPath: storage
+        - mountPath: /var/www/app/public/logo
+          name: invoiceninja
+          subPath: logo
+        - mountPath: /var/www/app/public
+          name: invoiceninja
+          subPath: public
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - name: invoiceninja
+        persistentVolumeClaim:
+          claimName: invoiceninja-nfs
+      - configMap:
+          defaultMode: 256
+          name: nginx
+          optional: false
+        name: nginx

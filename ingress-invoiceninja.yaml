@@ -1,0 +1,14 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  generation: 1
+  name: invoiceninja
+  namespace: invoiceninja
+spec:
+  rules:
+  - host: racuni.zuraj.com
+    http:
+      paths:
+      - backend:
+          serviceName: invoiceninja
+          servicePort: 80

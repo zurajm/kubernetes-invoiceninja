@@ -1,0 +1,15 @@
+# Environment variables for invoiceninja
+# you should create both, secret and configmap
+# as both are used
+apiVersion: v1
+data:
+  API_SECRET: TjYjZ1ZBNEh1P2Nx
+  APP_KEY: YmFzZTY0OkNWbjduQVlmcmF1Vk9Va0dyKzNQMmcrOGJScEJPbTg2RmUwWUdCeGdybDA9
+  DB_PASSWORD: SjlxbXNFNWJONEFT
+  MAIL_PASSWORD: YzYyMTM1ODNjZTNjZjcwNjQ5Mzg0ZDdhYzJiMDYxM2MtNTJiMGVhNzctN2E0YmEyY2Y=
+  PHANTOMJS_SECRET: TXpIcTdLNzdxK0k5Y3pGK3BnMjFlaFpsZUFRUHQxRE1Ib0N1eXF4ais2S2diYm1DZy82Q1Y0RVd3cThFbHpTa1FiVXNtR3A3b3E3ODhYSjJ0ZVorMVk3REM2RlBDT1JHYlViSnViaStUdndEOXNROUhmNGc3OER1cXVGUWR2Zkl1MWR6RlNMUWtxRkZMZVA4Z1VuSmZ5M1VlOGg1OXpxTUNFcVRWeDhkL29BPQ==
+kind: Secret
+metadata:
+  name: env-secret
+  namespace: invoiceninja
+type: Opaque
