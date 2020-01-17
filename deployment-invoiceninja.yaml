@@ -30,7 +30,7 @@ spec:
         - secretRef:
             name: env-secret
             optional: false
-        image: invoiceninja/invoiceninja
+        image: zurajm/invoiceninja:alpine
         imagePullPolicy: Always
         resources: {}
         volumeMounts:
