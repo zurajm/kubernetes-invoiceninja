@@ -12,7 +12,7 @@ docker buildx create --name mybuilder
 docker buildx use mybuilder
 docker buildx inspect --bootstra
 # Replace tag user and tag with correct values
-docker buildx build --platform linux/amd64,linux/arm64 --push -t zurajm/invoiceninja:alpine-4.5.17
+docker buildx build --platform linux/amd64,linux/arm64 --push -t zurajm/invoiceninja:alpine-4.5.17 ./invoiceninja-dockerfiles
 ```
 ## Deploying
 ```bash
