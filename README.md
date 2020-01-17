@@ -1,5 +1,6 @@
 # Invoiceninja on Kubernetes
-![invoiceninja](https://github.com/invoiceninja/invoiceninja/raw/master/public/images/footer-logo.png) + ![kubernetes](https://github.com/zurajm/kubernetes-invoiceninja/raw/master/kubernetes.png)
+![invoiceninja](https://github.com/invoiceninja/invoiceninja/raw/master/public/images/footer-logo.png) ON ![kubernetes](https://github.com/zurajm/kubernetes-invoiceninja/raw/master/kubernetes.png)
+
 This repo is for building multiarch Docker image from official Invoiceninja GitHub [repo](https://github.com/invoiceninja/dockerfiles). When deploying please note that some *secrets* and *configmaps* are encrypted ([git-crypt](https://www.agwa.name/projects/git-crypt/)) so you will have to create them yourself.
 
 ## Building the images
@@ -12,4 +13,14 @@ docker buildx use mybuilder
 docker buildx inspect --bootstra
 # Replace tag user and tag with correct values
 docker buildx build --platform linux/amd64,linux/arm64 --push -t zurajm/invoiceninja:alpine-4.5.17
+```
+## Deploying
+```bash
+# It gets deployed in invoceninja namespace by default
+kubectl apply -f configmap-invoiceninja-env.yaml
+kubectl apply -f configmap-invoiceninja-env.yaml
+kubectl apply -f secret-invoiceninja-env.yaml
+kubectl apply -f deployment-invoiceninja.yaml
+kubectl apply -f service-invoiceninja.yaml
+kubectl apply -f ingress-invoiceninja.yaml
 ```
