@@ -1,0 +1,24 @@
+# Environment variables for invoiceninja
+apiVersion: v1
+data:
+  APP_CIPHER: AES-256-CBC
+  APP_DEBUG: "0"
+  APP_ENV: production
+  APP_URL: 
+  DB_DATABASE:
+  DB_HOST:
+  DB_USERNAME:
+  GOOGLE_MAPS_API_KEY:
+  LOCK_SENT_INVOICES: "true"
+  MAIL_DRIVER: smtp
+  MAIL_FROM_ADDRESS:
+  MAIL_FROM_NAME: ''
+  MAIL_HOST:
+  MAIL_USERNAME:
+  PHANTOMJS_CLOUD_KEY:
+  REQUIRE_HTTPS: "true"
+  TRUSTED_PROXIES: '*'
+kind: ConfigMap
+metadata:
+  name: env
+  namespace: invoiceninja
