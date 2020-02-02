@@ -23,7 +23,7 @@ data:
 
         server {
             listen      80 default;
-            server_name your_ininja_site;
+            server_name racuni.zuraj.com;
 
             root /var/www/app/public;
 

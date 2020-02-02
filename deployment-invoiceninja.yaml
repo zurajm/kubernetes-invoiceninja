@@ -21,6 +21,13 @@ spec:
       labels:
         app: invoiceninja
     spec:
+      # Alpine DNS resolve fix: https://github.com/kubernetes/kubernetes/issues/64924#issuecomment-488848061
+      dnsConfig:
+        options:
+          - name: ndots
+            value: "1"
+      nodeSelector:
+        kubernetes.io/arch: amd64
       containers:
       - name: app
         envFrom:
@@ -30,7 +37,7 @@ spec:
         - secretRef:
             name: env-secret
             optional: false
-        image: zurajm/invoiceninja:alpine
+        image: invoiceninja/invoiceninja
         imagePullPolicy: Always
         resources: {}
         volumeMounts:
@@ -88,7 +95,7 @@ spec:
         - secretRef:
             name: env-secret
             optional: false
-        image: zurajm/invoiceninja:alpine
+        image: invoiceninja/invoiceninja
         imagePullPolicy: Always
         resources: {}
         volumeMounts:
