@@ -65,7 +65,13 @@ spec:
         - containerPort: 80
           name: http
           protocol: TCP
-        resources: {}
+        resources:
+          requests:
+            memory: 128Mi
+            cpu: 500m
+          limits:
+            memory: 250Mi
+            cpu: 1000m
         volumeMounts:
         - mountPath: /var/www/app/storage
           name: invoiceninja
