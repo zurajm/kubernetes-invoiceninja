@@ -4,4 +4,9 @@ images:
   - name: invoiceninja/invoiceninja
     newTag: 4.5.18
 resources:
-- deployment-invoiceninja.yaml
+- configmap-nginx.yaml
+- deployment.yaml
+- service.yaml
+- ingress.yaml
+- secrets/configmap-env.yaml
+- secrets/secret-env.yaml
