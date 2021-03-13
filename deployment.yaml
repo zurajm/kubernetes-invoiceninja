@@ -82,9 +82,9 @@ spec:
         - mountPath: /var/www/app/public
           name: invoiceninja
           subPath: public
-        - mountPath: /etc/nginx/nginx.conf
+        - mountPath: /etc/nginx/conf.d/in-vhost.conf
           name: nginx
-          subPath: nginx.conf
+          subPath: in-vhost.conf
         # Cron
       - name: cron
         args:
