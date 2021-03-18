@@ -1,0 +1,250 @@
+<style id="style">
+    :root {
+        --primary-color: $primary_color;
+        --secondary-color: $secondary_color;
+    }
+
+    body {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: "$font_size";
+        zoom: 70%;
+    }
+
+    @page {
+        margin: $global_margin;
+    }
+
+    p {
+        margin: 0;
+        padding: 0;
+    }
+
+    .header-container {
+        display: grid;
+        grid-template-columns: 3.4fr 1.4fr 0.9fr;
+        grid-gap: 20px;
+    }
+
+    .header-container > span {
+        display: block;
+    }
+
+    .company-logo {
+        height: 5rem;
+    }
+
+    #company-details {
+        display: flex;
+        flex-direction: column;
+        color: var(--secondary-color);
+    }
+
+    #company-details p[data-ref=company_details-company1]:before {
+        content: "IBAN: ";
+
+    }
+
+    #company-details p[data-ref=company_details-company2]:before {
+        content: "BIC: ";
+   }
+
+    #company-address p[data-ref="company_address-company.vat_number"]:before {
+        content: "DDV ID: ";
+
+    }
+
+    #company-address {
+        display: flex;
+        flex-direction: column;
+        color: var(--secondary-color);
+    }
+
+    #company-address > * {
+      /*  margin-bottom: 0.1rem; */
+    }
+
+    .entity-issued-to {
+        margin-top: 3rem;
+        font-weight: bold;
+    }
+
+    .client-and-entity-wrapper {
+        display: grid;
+        grid-template-columns: 3fr 1.5fr;
+        gap: 20px;
+    }
+
+    #client-details {
+        display: flex;
+        flex-direction: column;
+        margin-top: 1rem;
+    }
+
+    #client-details > p:nth-child(1) {
+        color: var(--primary-color);
+    }
+
+    #entity-details {
+        background-color: var(--primary-color);
+        padding: 1.2rem;
+        border-radius: 1rem;
+        width: 100%;
+        color: white;
+        text-align: left;
+    }
+
+    #entity-details th {
+        font-weight: normal;
+        padding-bottom: .5rem;
+    }
+
+    #entity-details > tbody > tr > th:nth-child(2) {
+        text-align: right;
+    }
+
+    #product-table,
+    #delivery-note-table,
+    #task-table {
+        margin-top: 3.5rem;
+        /* margin-bottom: 200px; */
+        min-width: 100%;
+        table-layout: fixed;
+        overflow-wrap: break-word;
+        zoom: 90%;
+    }
+
+    .task-time-details {
+        display: block;
+        margin-top: 5px;
+        color: grey;
+    }
+
+    #product-table > thead,
+    #delivery-note-table > thead,
+    #task-table > thead {
+        text-align: left;
+        background: var(--secondary-color);
+    }
+
+    #product-table > thead > tr > th,
+    #delivery-note-table > thead > tr > th,
+    #task-table > thead > tr > th {
+        padding: 0.5rem;
+        color: white;
+        font-weight: semibold;
+    }
+
+    #product-table > thead > tr > th:first-child,
+    #delivery-note-table > thead > tr > th:first-child,
+    #task-table > thead > tr > th:first-child {
+        border-top-left-radius: 0.6rem;
+    }
+
+    #product-table > thead > tr > th:last-child,
+    #delivery-note-table > thead > tr > th:last-child,
+    #task-table > thead > tr > th:last-child {
+        border-top-right-radius: 0.6rem;
+        text-align: right;
+    }
+
+    #product-table > tbody > tr > td,
+    #delivery-note-table > tbody > tr > td,
+    #task-table > tbody > tr > td {
+        padding: 0.5rem;
+    }
+
+    #product-table > tbody > tr > td:last-child,
+    #delivery-note-table > tbody > tr > td:last-child,
+    #task-table > tbody > tr > td:last-child {
+        text-align: right;
+    }
+
+    #product-table > tbody > tr:nth-child(odd) > td,
+    #delivery-note-table > tbody > tr:nth-child(odd) > td,
+    #task-table > tbody > tr:nth-child(odd) > td {
+        background: #F7F7F7;
+    }
+
+    #product-table > tbody > tr:nth-child(even) > td,
+    #delivery-note-table > tbody > tr:nth-child(even) > td,
+    #task-table > tbody > tr:nth-child(even) > td {
+        background: #f7f7f7;
+    }
+
+    [data-element='product-table-balance-due-label'],
+    [data-element='product-table-balance-due'],
+    [data-element='task-table-balance-due-label'],
+    [data-element='task-table-balance-due'] {
+        color: var(--secondary-color) !important;
+        font-weight: bold !important;
+    }
+
+    #table-totals {
+        page-break-inside: avoid;
+    }
+
+    #table-totals > *:last-child {
+        border-bottom-left-radius: 1rem;
+        border-bottom-right-radius: 1rem;
+    }
+
+    #table-totals {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 80px;
+        padding-left: 1rem;
+        padding-top: 0.5rem;
+        padding-bottom: 0.8rem;
+    }
+
+    #table-totals .totals-table-right-side>* {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+
+    #table-totals>.totals-table-right-side>*> :nth-child(1) {
+        text-align: left;
+        padding-left: 1rem;
+    }
+
+    #table-totals>.totals-table-right-side>*> :nth-child(2) {
+        text-align: right;
+        padding-right: 1rem;
+    }
+
+    #table-totals
+    > *
+    [data-ref='totals_table-outstanding-label'],
+    #table-totals
+    > *
+    [data-ref='totals_table-outstanding'] {
+        font-weight: bold;
+        font-size: 1.2rem;
+        background-color: var(--secondary-color);
+        color: white;
+        padding: 0.3rem;
+    }
+
+    #table-totals
+    > *
+    [data-ref='totals_table-outstanding'] {
+        /* color: red; */
+        border-top-right-radius: 0.6rem;
+        border-bottom-right-radius: 0.6rem;
+    }
+
+    #table-totals
+    > *
+    [data-ref='totals_table-outstanding-label'] {
+        /* color: red; */
+        border-top-left-radius: 0.6rem;
+        border-bottom-left-radius: 0.6rem;
+    }
+
+    #table-totals > * > :last-child {
+        text-align: right;
+        padding-right: 1rem;
+    }
+</style>

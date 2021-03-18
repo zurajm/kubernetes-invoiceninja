@@ -1,0 +1,16 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: invoiceninja
+spec:
+  rules:
+  - host: racuni5.zuraj.com
+    http:
+      paths:
+      - backend:
+          serviceName: invoiceninja
+          servicePort: 80
+  tls:
+  - hosts:
+    - racuni5.zuraj.com
+    secretName: racuni5.zuraj.com-cert

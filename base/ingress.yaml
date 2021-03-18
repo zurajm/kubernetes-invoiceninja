@@ -5,7 +5,6 @@ metadata:
     # define issuer for cert-manager to be able to request certificate
     cert-manager.io/cluster-issuer: le-prod
   name: invoiceninja
-  namespace: invoiceninja
 spec:
   rules:
   - host: racuni.zuraj.com

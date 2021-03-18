@@ -4,7 +4,6 @@ metadata:
   labels:
     app: invoiceninja
   name: invoiceninja
-  namespace: invoiceninja
 spec:
   replicas: 1
   revisionHistoryLimit: 10
@@ -12,55 +11,51 @@ spec:
     matchLabels:
       app: invoiceninja
   strategy:
+    type: RollingUpdate
     rollingUpdate:
       maxSurge: 1
       maxUnavailable: 0
-    type: RollingUpdate
   template:
     metadata:
       labels:
         app: invoiceninja
     spec:
       # Alpine DNS resolve fix: https://github.com/kubernetes/kubernetes/issues/64924#issuecomment-488848061
-      dnsConfig:
-        options:
-          - name: ndots
-            value: "1"
+      # dnsConfig:
+      #   options:
+      #     - name: ndots
+      #       value: "1"
       nodeSelector:
         kubernetes.io/arch: amd64
       containers:
       - name: app
         envFrom:
-        - configMapRef:
-            name: env
-            optional: false
+        # - configMapRef:
+        #     name: env
+        #     optional: false
         - secretRef:
             name: env-secret
             optional: false
-        image: invoiceninja/invoiceninja
-        imagePullPolicy: Always
+        image: invoiceninja/invoiceninja:5
+        imagePullPolicy: IfNotPresent
         resources: {}
         volumeMounts:
+        - mountPath: /usr/local/bin/shutdown.sh
+          name: config-files
+          subPath: shutdown.sh
         - mountPath: /var/www/app/storage
           name: invoiceninja
           subPath: storage
-        - mountPath: /var/www/app/public/logo
-          name: invoiceninja
-          subPath: logo
         - mountPath: /var/www/app/public
           name: invoiceninja
           subPath: public
-        #WEB
       - name: web
         envFrom:
-        - configMapRef:
-            name: env
-            optional: false
         - secretRef:
             name: env-secret
             optional: false
-        image: nginx:1
-        imagePullPolicy: Always
+        image: nginx:alpine
+        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 80
           name: http
@@ -76,44 +71,16 @@ spec:
         - mountPath: /var/www/app/storage
           name: invoiceninja
           subPath: storage
-        - mountPath: /var/www/app/public/logo
-          name: invoiceninja
-          subPath: logo
+        # - mountPath: /var/www/app/public/logo
+        #   name: invoiceninja
+        #   subPath: logo
         - mountPath: /var/www/app/public
           name: invoiceninja
           subPath: public
-        - mountPath: /etc/nginx/nginx.conf
-          name: nginx
-          subPath: nginx.conf
-        # Cron
-      - name: cron
-        args:
-        - -c
-        - trap "break;exit" SIGHUP SIGINT SIGTERM; sleep 300s; while /bin/true; do
-          ./artisan ninja:send-invoices; ./artisan ninja:send-reminders; sleep 1d;
-          done
-        command:
-        - /bin/sh
-        envFrom:
-        - configMapRef:
-            name: env
-            optional: false
-        - secretRef:
-            name: env-secret
-            optional: false
-        image: invoiceninja/invoiceninja
-        imagePullPolicy: Always
-        resources: {}
-        volumeMounts:
-        - mountPath: /var/www/app/storage
-          name: invoiceninja
-          subPath: storage
-        - mountPath: /var/www/app/public/logo
-          name: invoiceninja
-          subPath: logo
-        - mountPath: /var/www/app/public
-          name: invoiceninja
-          subPath: public
+        - mountPath: /etc/nginx/conf.d/in-vhost.conf
+          name: config-files
+          subPath: in-vhost.conf
+          readOnly: true
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       schedulerName: default-scheduler
@@ -122,9 +89,9 @@ spec:
       volumes:
       - name: invoiceninja
         persistentVolumeClaim:
-          claimName: invoiceninja-nfs
+          claimName: invoiceninja5-nfs
       - configMap:
           defaultMode: 256
-          name: nginx
+          name: config-files
           optional: false
-        name: nginx
+        name: config-files

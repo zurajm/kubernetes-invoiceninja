@@ -1,0 +1,17 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: invoiceninja
+spec:
+  template:
+    spec:
+      volumes:
+      - name: invoiceninja
+        persistentVolumeClaim:
+          claimName: invoiceninja-nfs-v5
+      # - name: nginx
+      #   configMap:
+      #     defaultMode: 256
+      #     name: nginx-config-5
+      #     optional: false
+    
