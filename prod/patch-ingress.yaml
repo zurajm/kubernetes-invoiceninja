@@ -4,7 +4,7 @@ metadata:
   name: invoiceninja
 spec:
   rules:
-  - host: racuni5.zuraj.com
+  - host: racuni.zuraj.com
     http:
       paths:
       - backend:
@@ -12,5 +12,5 @@ spec:
           servicePort: 80
   tls:
   - hosts:
-    - racuni5.zuraj.com
-    secretName: racuni5.zuraj.com-cert
+    - racuni.zuraj.com
+    secretName: racuni.zuraj.com-cert
