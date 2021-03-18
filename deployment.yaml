@@ -71,47 +71,9 @@ spec:
         - mountPath: /var/www/app/storage
           name: invoiceninja
           subPath: storage
-<<<<<<< HEAD:base/deployment.yaml
         # - mountPath: /var/www/app/public/logo
         #   name: invoiceninja
         #   subPath: logo
-=======
-        - mountPath: /var/www/app/public/logo
-          name: invoiceninja
-          subPath: logo
-        - mountPath: /var/www/app/public
-          name: invoiceninja
-          subPath: public
-        - mountPath: /etc/nginx/conf.d/in-vhost.conf
-          name: nginx
-          subPath: in-vhost.conf
-        # Cron
-      - name: cron
-        args:
-        - -c
-        - trap "break;exit" SIGHUP SIGINT SIGTERM; sleep 300s; while /bin/true; do
-          ./artisan ninja:send-invoices; ./artisan ninja:send-reminders; sleep 1d;
-          done
-        command:
-        - /bin/sh
-        envFrom:
-        - configMapRef:
-            name: env
-            optional: false
-        - secretRef:
-            name: env-secret
-            optional: false
-        image: invoiceninja/invoiceninja
-        imagePullPolicy: Always
-        resources: {}
-        volumeMounts:
-        - mountPath: /var/www/app/storage
-          name: invoiceninja
-          subPath: storage
-        - mountPath: /var/www/app/public/logo
-          name: invoiceninja
-          subPath: logo
->>>>>>> a77ee805750df8ee5c996cfbc034dc6e3370dd95:deployment.yaml
         - mountPath: /var/www/app/public
           name: invoiceninja
           subPath: public
