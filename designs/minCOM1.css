@@ -54,6 +54,11 @@
         content: "DDV ID: ";
 
     }
+    
+    #client-details p[data-ref="client_details-client.vat_number"]:before {
+        content: "DDV ID: ";
+
+    }
 
     #company-address {
         display: flex;
