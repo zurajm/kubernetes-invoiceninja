@@ -1,0 +1,19 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    # define issuer for cert-manager to be able to request certificate
+    cert-manager.io/cluster-issuer: le-prod
+  name: invoiceninja
+spec:
+  rules:
+  - host: racuni.zuraj.com
+    http:
+      paths:
+      - backend:
+          serviceName: invoiceninja
+          servicePort: 80
+  tls:
+  - hosts:
+    - racuni.zuraj.com
+    secretName: racuni.zuraj.com-cert
