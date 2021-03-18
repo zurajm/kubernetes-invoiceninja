@@ -9,9 +9,3 @@ spec:
       - name: invoiceninja
         persistentVolumeClaim:
           claimName: invoiceninja-nfs-v5
-      # - name: nginx
-      #   configMap:
-      #     defaultMode: 256
-      #     name: nginx-config-5
-      #     optional: false
-    

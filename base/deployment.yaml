@@ -20,19 +20,11 @@ spec:
       labels:
         app: invoiceninja
     spec:
-      # Alpine DNS resolve fix: https://github.com/kubernetes/kubernetes/issues/64924#issuecomment-488848061
-      # dnsConfig:
-      #   options:
-      #     - name: ndots
-      #       value: "1"
       nodeSelector:
         kubernetes.io/arch: amd64
       containers:
       - name: app
         envFrom:
-        # - configMapRef:
-        #     name: env
-        #     optional: false
         - secretRef:
             name: env-secret
             optional: false
@@ -71,9 +63,6 @@ spec:
         - mountPath: /var/www/app/storage
           name: invoiceninja
           subPath: storage
-        # - mountPath: /var/www/app/public/logo
-        #   name: invoiceninja
-        #   subPath: logo
         - mountPath: /var/www/app/public
           name: invoiceninja
           subPath: public
