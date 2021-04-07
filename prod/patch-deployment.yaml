@@ -5,6 +5,22 @@ metadata:
 spec:
   template:
     spec:
+      # nodeSelector:
+      #   kubernetes.io/arch: amd64
+      volumes:
+      - name: invoiceninja
+        persistentVolumeClaim:
+          claimName: invoiceninja-nfs-v5
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web
+spec:
+  template:
+    spec:
+      # nodeSelector:
+      #   kubernetes.io/arch: amd64
       volumes:
       - name: invoiceninja
         persistentVolumeClaim:

@@ -3,13 +3,14 @@ kind: Deployment
 metadata:
   labels:
     app: invoiceninja
+    component: app
   name: invoiceninja
 spec:
   replicas: 1
   revisionHistoryLimit: 10
   selector:
     matchLabels:
-      app: invoiceninja
+      component: app
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -18,10 +19,8 @@ spec:
   template:
     metadata:
       labels:
-        app: invoiceninja
+        component: app
     spec:
-      nodeSelector:
-        kubernetes.io/arch: amd64
       containers:
       - name: app
         envFrom:
@@ -30,6 +29,10 @@ spec:
             optional: false
         image: invoiceninja/invoiceninja:5
         imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 9000
+          name: fastcgi
+          protocol: TCP
         resources: {}
         volumeMounts:
         - mountPath: /usr/local/bin/shutdown.sh
@@ -41,6 +44,47 @@ spec:
         - mountPath: /var/www/app/public
           name: invoiceninja
           subPath: public
+      
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - name: invoiceninja
+        persistentVolumeClaim:
+          claimName: invoiceninja5-nfs
+      - configMap:
+          defaultMode: 256
+          name: config-files
+          optional: false
+        name: config-files
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: nginx
+    component: web
+  name: web
+spec:
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      component: web
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  template:
+    metadata:
+      labels:
+        component: web
+    spec:
+      containers:
       - name: web
         envFrom:
         - secretRef:
