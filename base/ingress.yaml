@@ -1,4 +1,4 @@
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   annotations:
@@ -10,9 +10,13 @@ spec:
   - host: racuni.zuraj.com
     http:
       paths:
-      - backend:
-          serviceName: invoiceninja
-          servicePort: 80
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: invoiceninja
+            port:
+              name: http
   tls:
   - hosts:
     - racuni.zuraj.com

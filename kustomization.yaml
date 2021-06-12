@@ -8,7 +8,7 @@ commonLabels:
   app: invoiceninja-v5
 images:
   - name: invoiceninja/invoiceninja
-    newTag: "5.1.37"
+    newTag: "5.2.1"
 resources:
   - prod/pvc.yaml
 patchesStrategicMerge:
