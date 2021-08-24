@@ -23,7 +23,7 @@
 
     .header-container {
         display: grid;
-        grid-template-columns: 3.4fr 1.4fr 0.9fr;
+        grid-template-columns: 3.6fr 1.6fr 0.9fr;
         grid-gap: 20px;
     }
 
@@ -41,24 +41,38 @@
         color: var(--secondary-color);
     }
 
-    #company-details p[data-ref=company_details-company1]:before {
+    #company-details p[data-ref="company_details-company.custom1"]  {
+        padding-top: 0.6rem;
+    }
+
+    #company-details p[data-ref="company_details-company.custom1"] > p:before {
         content: "IBAN: ";
-
     }
 
-    #company-details p[data-ref=company_details-company2]:before {
+    #company-details p[data-ref="company_details-company.custom2"] > p:before {
         content: "BIC: ";
-   }
-
-    #company-address p[data-ref="company_address-company.vat_number"]:before {
-        content: "DDV ID: ";
-
     }
-    
-    #client-details p[data-ref="client_details-client.vat_number"]:before {
-        content: "DDV ID: ";
 
+    #company-address p[data-ref="company_address-company.vat_number"]  {
+        padding-top: 0.6rem;
     }
+
+    #company-address p[data-ref="company_address-company.vat_number"] > p:before {
+        content: "DDV ID: ";
+    }
+
+    #client-details p[data-ref="client_details-client.name"] {
+        padding-bottom: 0.6rem;
+    }
+
+    #client-details p[data-ref="client_details-client.vat_number"] {
+        padding-top: 0.6rem;
+    }
+
+    #client-details p[data-ref="client_details-client.vat_number"] > p:before {
+        content: "DDV ID: ";
+    }
+
 
     #company-address {
         display: flex;
@@ -89,6 +103,7 @@
 
     #client-details > p:nth-child(1) {
         color: var(--primary-color);
+        font-weight: bold;
     }
 
     #entity-details {
@@ -230,7 +245,7 @@
         background-color: var(--secondary-color);
         color: white;
         padding: 0.3rem;
-    }
+    } 
 
     #table-totals
     > *
@@ -251,5 +266,9 @@
     #table-totals > * > :last-child {
         text-align: right;
         padding-right: 1rem;
+    }
+
+    #footer p[data-ref="footer.custom_podpis"] {
+        padding-left: 0.8rem;
     }
 </style>
