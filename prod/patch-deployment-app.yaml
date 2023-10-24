@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: invoiceninja
+spec:
+  template:
+    metadata:
+      annotations:
+        diun.enable: "true"
+        diun.watch_repo: "true"
+        diun.include_tags: "^(5\\.\\d+\\.\\d+)$"
+    spec:
+      # nodeSelector:
+      #   kubernetes.io/arch: amd64
+      containers:
+      - name: app
+        resources:
+          requests:
+            cpu: 92m
+            memory: 411M
+          limits:
+            cpu: 456m
+            memory: 741M
+      dnsConfig:
+        options:
+          - name: ndots
+            value: "2"
+      volumes:
+      - name: invoiceninja
+        persistentVolumeClaim:
+          claimName: invoiceninja-nfs-v5

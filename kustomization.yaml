@@ -1,26 +1,29 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-bases:
-  - base
-nameSuffix: "-v5"
+nameSuffix: -v5
 namespace: invoiceninja-5
-commonLabels:
-  app: invoiceninja-v5
 images:
-  - name: invoiceninja/invoiceninja
-    newTag: "5.5.21"
+- name: invoiceninja/invoiceninja
+  newTag: 5.7.33
 resources:
-  - prod/pvc.yaml
-patchesStrategicMerge:
-  - prod/patch-deployment.yaml
-  - prod/patch-ingress.yaml
+- prod/pvc.yaml
+- base
 configMapGenerator:
-- name: config-files
-  files:
-    - config/in-vhost.conf
-    - config/shutdown.sh
+- files:
+  - config/in-vhost.conf
+  - config/shutdown.sh
+  name: config-files
 secretGenerator:
-  - name: env-secret
-    env: secrets/env.txt
+- envs:
+  - secrets/env.txt
+  name: env-secret
 generatorOptions:
   disableNameSuffixHash: true
+labels:
+- includeSelectors: true
+  pairs:
+    app: invoiceninja-v5
+patches:
+- path: prod/patch-deployment-app.yaml
+- path: prod/patch-deployment-web.yaml
+- path: prod/patch-ingress.yaml
